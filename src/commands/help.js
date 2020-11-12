@@ -1,5 +1,8 @@
 //help commands
 const { prefix } = require('../../config.json');
+const { readdirSync } = require("fs")
+const { join } = require('path');
+const Discord = require('discord.js');
 
 module.exports = {
     name: 'help',
@@ -12,13 +15,35 @@ module.exports = {
         const data = [];
         const { commands } = message.client;
 
+
+
         if (!args.length) {
             // ...
+            const embed = new Discord.MessageEmbed()
+                .setColor('#ff951c')
+                .setTitle('Command List')
+                .setAuthor(message.client.user.username, message.client.user.displayAvatarURL())
+                .setDescription('Here\'s a list of all my commands!')
+                .setThumbnail(message.client.user.displayAvatarURL())
+                .setTimestamp()
+                .setFooter('woof woof', message.client.user.displayAvatarURL());
+
+            let command = readdirSync(join(__dirname)).filter(file => file.endsWith('.js'));
+
+            let i;
+            for (i = 0; i < command.length; i++) {
+                console.log(command[i])
+
+                const cmd = message.client.commands.get(command[i].replace(".js", ""))
+                embed.addField(`**${cmd.name}**`, cmd.description, true)
+
+            }
+
             data.push('Here\'s a list of all my commands:');
             data.push(commands.map(command => command.name).join(', '));
             data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
 
-            return message.author.send(data, { split: true })
+            return message.author.send(embed)
                 .then(() => {
                     if (message.channel.type === 'dm') return;
                     message.reply('I\'ve sent you a DM with all my commands!');
