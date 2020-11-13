@@ -1,6 +1,8 @@
 module.exports = {
 	name: 'volume',
-	description: 'Adjust volume settings for bot, default:2/5! woof!',
+	description: 'Adjust volume settings for bot, default:2/5!',
+	usage: '<volume n/5>',
+	args: true,
 	cooldown: 5,
 	execute(message, args) {
 		const { channel } = message.member.voice;

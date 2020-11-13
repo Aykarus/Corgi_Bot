@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'stop',
-	description: 'Stop command.',
+	aliases: ['end', 'leave'],
+	description: 'Empty queued songs and leave! bark!',
 	cooldown: 5,
 	execute(message) {
 		const { channel } = message.member.voice;

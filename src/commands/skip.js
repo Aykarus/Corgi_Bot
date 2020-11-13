@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'skip',
-	description: 'Skip to next queued song! woof!',
+	description: 'Skip to next queued song!',
 	cooldown: 5,
 	execute(message) {
 		const { channel } = message.member.voice;

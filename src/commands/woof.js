@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 module.exports = {
     name: 'woof',
+    aliases: ['bark', 'good-boy', 'dog'],
     description: 'Random corgi images, awww so cute! woof woof!',
     cooldown: 5,
     async execute(messages, args) {

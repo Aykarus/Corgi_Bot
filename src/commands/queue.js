@@ -1,6 +1,8 @@
 module.exports = {
 	name: 'queue',
 	description: 'View list of queued songs! woof!',
+	usage: '<number>',
+	args: true,
 	cooldown: 5,
 	execute(message) {
 		const serverQueue = message.client.queue.get(message.guild.id);

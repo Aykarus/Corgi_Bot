@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'resume',
-	description: 'Resume paused songs! woof!',
+	description: 'Resume paused songs!',
 	cooldown: 5,
 	execute(message) {
 		const serverQueue = message.client.queue.get(message.guild.id);
