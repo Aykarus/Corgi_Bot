@@ -1,5 +1,6 @@
 const { Util } = require('discord.js');
 const ytdl = require('ytdl-core');
+const yts = require('yt-search')
 
 module.exports = {
 	name: 'play',
@@ -13,9 +14,21 @@ module.exports = {
 		const permissions = channel.permissionsFor(message.client.user);
 		if (!permissions.has('CONNECT')) return message.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!');
 		if (!permissions.has('SPEAK')) return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
-
 		const serverQueue = message.client.queue.get(message.guild.id);
-		const songInfo = await ytdl.getInfo(args[0].replace(/<(.+)>/g, '$1'));
+		let songInfo = {}
+
+		//Check if youtube url
+		if (!(args[0]).match(/(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/)) {
+			const r = await yts(args.join(' '))
+			const video = r.videos[0]
+			// console.log(args);
+			message.channel.send(`🔎 ${video.url}`);
+			songInfo = await ytdl.getInfo(video.url.replace(/<(.+)>/g, '$1'));
+		} else {
+			message.channel.send("Is a Youtube link");
+			songInfo = await ytdl.getInfo(args[0].replace(/<(.+)>/g, '$1'));
+		}
+		// const songInfo = await ytdl.getInfo(args[0].replace(/<(.+)>/g, '$1'));
 		const song = {
 			id: songInfo.videoDetails.video_id,
 			title: Util.escapeMarkdown(songInfo.videoDetails.title),
