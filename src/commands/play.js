@@ -25,7 +25,6 @@ module.exports = {
 			message.channel.send(`🔎 ${video.url}`);
 			songInfo = await ytdl.getInfo(video.url.replace(/<(.+)>/g, '$1'));
 		} else {
-			message.channel.send("Is a Youtube link");
 			songInfo = await ytdl.getInfo(args[0].replace(/<(.+)>/g, '$1'));
 		}
 		// const songInfo = await ytdl.getInfo(args[0].replace(/<(.+)>/g, '$1'));
